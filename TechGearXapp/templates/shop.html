@@ -1,0 +1,66 @@
+<head>
+    <title>TechGearX</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load static %}
+    <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet'>
+    <style>
+        body {
+        font-family: "Anton";
+        background: linear-gradient(#3B60FF, black);
+        margin: 5vh 10vh 0 10vh;
+        }
+
+    </style>
+</head>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home">
+            <img src="{% static 'logogearX.png' %}" width="150vh">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul>
+            <form class="d-flex">
+                <a class="nav-link text-white active pe-2" aria-current="page" href="/home">HOME</a>
+                <a class="nav-link text-white me-2" href="/shop"><u>SHOP</u></a>
+                <input class="form-control me-3" type="search" placeholder="Search" aria-label="Search">
+                <a href="/cart"><img src="{% static 'cart.svg' %}" width="25vh" class="me-2"></a>
+                <a href="/profile"><img src="{% static 'person.svg' %}" width="30vh"></a>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        {% for post in posts %}
+        <div class="card m-2 p-3" style="width: 40vh">
+            <img src="{{MEDIA_URL}}{{post.image.url}}" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.category }}</p>
+                <p class="card-text">{{ post.price }} EURO</p>
+            </div>
+            <form action="{% url 'add_to_cart' post.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary text-white">ADD TO CART</button>
+            </form>
+        </div>
+        <br>
+        {% endfor %}
+        <div class="card m-2 p-3 bg-primary" style="width: 40vh">
+            <div class="card-body text-center text-white d-flex justify-content-center align-items-center">
+                <div class="text-center">
+                    <a href="/shop/add-post">
+                        <input type="button" class="btn btn-primary text-black w-100" value="+"
+                               style="font-size: 10vh; width:10vh">
+                    </a>
+                </div>
+            </div>
+            <a href="/shop/add-post"><input type="button" class="btn btn-primary text-black w-100"
+                                            value="SELL YOUR PRODUCT"></a>
+        </div>
+    </div>
+</div>

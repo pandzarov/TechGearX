@@ -1,0 +1,47 @@
+<head>
+    <title>TechGearX</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load static %}
+    <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet'>
+    <style>
+        body {
+        font-family: "Anton";
+        background: linear-gradient(#3B60FF, black);
+        margin: 5vh 10vh 0 10vh;
+        }
+
+
+
+    </style>
+</head>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home">
+            <img src="{% static 'logogearX.png' %}" width="150vh">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul>
+            <form class="d-flex">
+                <a class="nav-link text-white active pe-2" aria-current="page" href="/home">HOME</a>
+                <a class="nav-link text-white me-2" href="/shop">SHOP</a>
+                <input class="form-control me-3" type="search" placeholder="Search" aria-label="Search">
+                <a href="/cart"><img src="{% static 'cart.svg' %}" width="25vh" class="me-2"></a>
+                <a href="/profile"><img src="{% static 'person.svg' %}" width="30vh"></a>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container bg-black p-5 mt-5 w-75">
+    <div class="container d-flex justify-content-end">
+        <a href="/logout" class="btn btn-secondary">LOGOUT</a>
+    </div>
+    <div class="d-flex flex-column justify-content-center align-items-center vh-95">
+        <img src="{% static 'profile.png' %}" class="img-fluid w-25">
+        <h1 class="text-white">{{ request.user.username }}</h1>
+        <h5 class="text-white">{{ request.user.email }}</h5>
+    </div>
+</div>

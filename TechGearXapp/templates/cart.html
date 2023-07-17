@@ -1,0 +1,83 @@
+<head>
+    <title>TechGearX</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load static %}
+    <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet'>
+    <style>
+        body {
+        font-family: "Anton";
+        background: linear-gradient(#3B60FF, black);
+        margin: 5vh 10vh 0 10vh;
+        }
+
+
+    </style>
+    <script>
+      function showConfirmation() {
+    if (confirm("THANK YOU FOR YOUR PURCHASE!")) {
+      document.getElementById("remove-form").submit();
+    }
+  }
+
+
+    </script>
+</head>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home">
+            <img src="{% static 'logogearX.png' %}" width="150vh">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul>
+            <form class="d-flex">
+                <a class="nav-link text-white active pe-2" aria-current="page" href="/home">HOME</a>
+                <a class="nav-link text-white me-2" href="/shop">SHOP</a>
+                <input class="form-control me-3" type="search" placeholder="Search" aria-label="Search">
+                <a href="/cart"><img src="{% static 'cart.svg' %}" width="25vh" class="me-2"></a>
+                <a href="/profile"><img src="{% static 'person.svg' %}" width="30vh"></a>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container w-50 bg-black p-5">
+    <div class="container">
+        <a href="/products" class="btn btn-secondary">YOUR PRODUCTS</a>
+        <a href="/cart" class="btn btn-primary">YOUR CART</a>
+    </div>
+    {% for item in cart_items %}
+    <div class="card m-2 p-3">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{MEDIA_URL}}{{ item.item.image.url }}" class="card-img-top" style="width:100%">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.item.title }}</h5>
+                    <p class="card-text">{{ item.item.category }}</p>
+                    <p class="card-text text-primary">{{ item.item.price }} EURO</p>
+                    <div class="row">
+                        <div class="col">
+                            <form action="{% url 'remove_from_cart' item.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary" onclick="showConfirmation()">PURCHASE
+                                </button>
+                                <button type="submit" class="btn btn-secondary">REMOVE</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="container text-center p-5">
+        <h1 class="text-white">YOUR CART IS EMPTY.</h1>
+        <a href="/shop"><input type="button" class="btn btn-primary text-black w-50" value="GO TO SHOP"></a>
+    </div>
+    {% endfor %}
+</div>
+
+
